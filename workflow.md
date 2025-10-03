@@ -1,6 +1,6 @@
 # 🥐 Croissant - Tasks
 
-## Task 1 - CLI Skeleton
+## Task 1 - CLI Skeleton 🤓
 - Create a Python CLI using argparse
 - Cmd format:
 ```bash
@@ -8,7 +8,7 @@ croissant create <name-folder> <mc-ver> <modloader> <modloader-ver>
 ```
 - Test: simply print the arguments w no logic yet
 
-## Task 2 - Folder n file skeleton
+## Task 2 - Folder n file skeleton 🤓
 - Creat a new folder from name-folder
 - Generate basic placeholder files inside it
 
