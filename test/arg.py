@@ -11,12 +11,17 @@ def main():
     create_parser = subparsers.add_parser("create", help="create a new minecraft server setup")
     create_parser.add_argument("folder", help="target folder name")
     create_parser.add_argument("version", help="minecraft version")
+    create_parser.add_argument("modloader", help="minecraft modloader")
+    create_parser.add_argument("mldver", help="minecraft modloader version")
+
 
     args = parser.parse_args()
 
     if args.command == "create":
         print(f"Creating server in folder: {args.folder}")
         print(f"Minecraft version: {args.version}")
+        print(f"Modloader: {args.modloader}")
+        print(f"Modloader version: {args.mldver}")
 
 
 if __name__ == "__main__":
