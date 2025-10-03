@@ -1,5 +1,4 @@
 import requests
-import sys
 
 def latest_ver(mc_version: str) -> str:
     url = "https://files.minecraftforge.net/net/minecraftforge/forge/promotions_slim.json"

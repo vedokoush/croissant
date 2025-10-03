@@ -14,6 +14,10 @@ def info():
     create_parser.add_argument("modloader", help="minecraft modloader")
     create_parser.add_argument("mldver", help="minecraft modloader version")
 
+    start_parser = subparsers.add_parser("start", help="start minecraft server")
+    start_parser.add_argument("folder", help="target folder name")
+
+
 
     args = parser.parse_args()
 
