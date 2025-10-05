@@ -1,6 +1,6 @@
 import requests
 
-def latest_ver(mc_version: str) -> str:
+def latest_forge(mc_version: str) -> str:
     url = "https://files.minecraftforge.net/net/minecraftforge/forge/promotions_slim.json"
     r = requests.get(url)
     r.raise_for_status()

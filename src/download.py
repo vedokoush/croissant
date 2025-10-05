@@ -1,6 +1,7 @@
 import requests
 from pathlib import Path
-from apis.latest_forge import latest_ver
+from apis.latest_forge import latest_forge
+from apis.latest_fabric import latest_fabric
 
 def install(url: str, dest: Path, file):
     dest.parent.mkdir(parents=True, exist_ok=True)
@@ -20,7 +21,6 @@ def install(url: str, dest: Path, file):
 
 def downloader(version: str, modloader: str, modloaderver: str, folder: str):
     folder = Path(folder)
-    latest_forge_ver = latest_ver(version)
 
     if modloader == "vanilla":
         url = f"https://launcher.mojang.com/v1/objects/{version}/server.jar"
@@ -29,22 +29,29 @@ def downloader(version: str, modloader: str, modloaderver: str, folder: str):
         install(url, path, file)
         return file
 
+
     elif modloader == "forge":
         if modloaderver == "latest":
-            modloaderver = latest_forge_ver
-
-        url = f"https://maven.minecraftforge.net/net/minecraftforge/forge/{version}-{modloaderver}/forge-{version}-{modloaderver}-installer.jar"
-        path = folder / f"forge-{version}-{modloaderver}-installer.jar"
-        file = f"forge-{version}-{modloaderver}-installer.jar"
-        install(url, path, file)
-        return file
+            modloaderver = latest_forge(version)
+        url = (
+            f"https://maven.minecraftforge.net/net/minecraftforge/forge/"
+            f"{version}-{modloaderver}/forge-{version}-{modloaderver}-installer.jar"
+        )
+        file_name = f"forge-{version}-{modloaderver}-installer.jar"
+        path = folder / file_name
+        return install(url, path, file_name)
 
     elif modloader == "fabric":
-        url = f"https://meta.fabricmc.net/v2/versions/loader/{version}/{modloaderver}/1.0.0/server/jar"
-        path = folder / f"fabric-{version}-{modloaderver}.jar"
-        file = f"fabric-{version}-{modloaderver}.jar"
-        install(url, path, file)
-        return file
+        if modloaderver == "latest":
+            modloaderver = latest_fabric(version)
+
+        url = (
+            f"https://meta.fabricmc.net/v2/versions/loader/"
+            f"{version}/{modloaderver}/1.0.0/server/jar"
+        )
+        file_name = f"fabric-{version}-{modloaderver}.jar"
+        path = folder / file_name
+        return install(url, path, file_name)
 
     else:
         print(f"Unknown modloader: {modloader}")

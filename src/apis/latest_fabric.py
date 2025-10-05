@@ -1,6 +1,6 @@
 import requests
 
-def latest_fabric_ver(mc_version: str) -> str:
+def latest_fabric(mc_version: str) -> str:
     url = f"https://meta.fabricmc.net/v2/versions/loader/{mc_version}/"
     r = requests.get(url)
     r.raise_for_status()
