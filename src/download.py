@@ -2,6 +2,7 @@ import requests
 from pathlib import Path
 from apis.latest_forge import latest_forge
 from apis.latest_fabric import latest_fabric
+from apis.latest_paper import get_paper_latest
 # from apis.latest_neoforge import latest_neoforge
 # from apis.latest_quilt import latest_quilt
 
@@ -72,6 +73,17 @@ def downloader(version: str, modloader: str, modloaderver: str, folder: str):
     #     file_name = f"quilt-{version}-{modloaderver}.jar"
     #     path = folder / file_name
     #     return install(url, path, file_name)
+
+    elif modloader == "paper":
+        if modloaderver == "latest":
+            modloaderver = get_paper_latest(version)
+        url = (
+            f"https://api.papermc.io/v2/projects/paper/versions/{version}/"
+            f"builds/{modloaderver}/downloads/paper-{version}-{modloaderver}.jar"
+        )
+        file_name = f"paper-{version}-{modloaderver}.jar"
+        path = folder / file_name
+        return install(url, path, file_name)
 
     else:
         print(f"Unknown modloader: {modloader}")

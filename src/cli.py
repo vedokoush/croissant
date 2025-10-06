@@ -37,7 +37,7 @@ def main():
         set_tag(folder_name, modloader)
         file_name = download.downloader(version, modloader, mldver, folder_name)
         print(f"Created {folder_name}/{file_name}")
-        if modloader == "forge":
+        if modloader in ("forge", "paper"):
             installer.installServer(folder_name, file_name)
         eula.write_eula(folder_name)
         return
@@ -49,7 +49,7 @@ def main():
         set_tag(args.folder, args.modloader)
         file_name = download.downloader(args.version, args.modloader, args.mldver, args.folder)
         print(file_name)
-        if args.modloader == "forge":
+        if modloader in ("forge", "paper"):
             installer.installServer(args.folder, file_name)
         eula.write_eula(args.folder)
 

@@ -42,7 +42,7 @@ def interactive_setup():
             "choices": ["Paper", "Purpur", "Spigot"]
         })["loader"]
 
-    print("\n✅ Summary:")
+    print("\n+) Summary:")
     print(f"  Folder: {folder}")
     print(f"  Minecraft Version: {version}")
     print(f"  Loader: {loader}")
