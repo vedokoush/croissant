@@ -6,7 +6,6 @@ from templates import eula
 import start
 import json
 import os
-import sys
 
 def set_tag(folder_path, tag_name):
     tag_file = os.path.join(folder_path, ".tag")
@@ -32,7 +31,6 @@ def main():
         elif args.modloader == "fabric":
             set_tag(args.folder, "fabric")
 
-        # print(args.folder)
         file_name = download.downloader(args.version, args.modloader, args.mldver, args.folder)
         print(file_name)
         if (args.modloader == "forge"):
@@ -40,7 +38,6 @@ def main():
         eula.write_eula(args.folder)
 
     elif args.command == "start":
-        # print(get_tag(args.folder))
         if (get_tag(args.folder) == "forge"):
             start.start_forge_server(args.folder)
         elif (get_tag(args.folder) == "fabric"):
