@@ -6,6 +6,7 @@ from templates import eula
 import start
 import json
 import os
+import sys
 
 def set_tag(folder_path, tag_name):
     tag_file = os.path.join(folder_path, ".tag")
@@ -23,6 +24,7 @@ def get_tag(folder_path):
 
 def main():
     args = handler.info()
+
     if args.command == "create":
         folder.init(args)
         if args.modloader == "forge":
