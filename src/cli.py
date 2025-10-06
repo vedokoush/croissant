@@ -6,11 +6,15 @@ from templates import eula
 import start
 import json
 import os
+import sys
+from interactive import interactive_setup
+
 
 def set_tag(folder_path, tag_name):
     tag_file = os.path.join(folder_path, ".tag")
     with open(tag_file, "w") as f:
         json.dump({"tag": tag_name}, f)
+
 
 def get_tag(folder_path):
     tag_file = os.path.join(folder_path, ".tag")
@@ -21,26 +25,39 @@ def get_tag(folder_path):
     except (json.JSONDecodeError, OSError, KeyError):
         return None
 
+
 def main():
+    if len(sys.argv) == 1:
+        result = interactive_setup()
+        if not result:
+            return
+        folder_name, version, modloader = result
+        mldver = "latest"
+        folder.init(type("Args", (), {"folder": folder_name}))
+        set_tag(folder_name, modloader)
+        file_name = download.downloader(version, modloader, mldver, folder_name)
+        print(f"Created {folder_name}/{file_name}")
+        if modloader == "forge":
+            installer.installServer(folder_name, file_name)
+        eula.write_eula(folder_name)
+        return
+
     args = handler.info()
 
     if args.command == "create":
         folder.init(args)
-        if args.modloader == "forge":
-            set_tag(args.folder, "forge")
-        elif args.modloader == "fabric":
-            set_tag(args.folder, "fabric")
-
+        set_tag(args.folder, args.modloader)
         file_name = download.downloader(args.version, args.modloader, args.mldver, args.folder)
         print(file_name)
-        if (args.modloader == "forge"):
+        if args.modloader == "forge":
             installer.installServer(args.folder, file_name)
         eula.write_eula(args.folder)
 
     elif args.command == "start":
-        if (get_tag(args.folder) == "forge"):
+        tag = get_tag(args.folder)
+        if tag == "forge":
             start.start_forge_server(args.folder)
-        elif (get_tag(args.folder) == "fabric"):
+        elif tag == "fabric":
             start.start_fabric_server(args.folder)
         else:
             print("Unknown command")
