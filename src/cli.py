@@ -31,8 +31,7 @@ def main():
         result = interactive_setup()
         if not result:
             return
-        folder_name, version, modloader = result
-        mldver = "latest"
+        folder_name, version, modloader, mldver = result
         folder.init(type("Args", (), {"folder": folder_name}))
         set_tag(folder_name, modloader)
         file_name = download.downloader(version, modloader, mldver, folder_name)

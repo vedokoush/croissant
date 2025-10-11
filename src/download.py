@@ -33,13 +33,23 @@ def downloader(version: str, modloader: str, modloaderver: str, folder: str):
     elif modloader == "forge":
         if modloaderver == "latest":
             modloaderver = latest_forge(version)
+
         url = (
             f"https://maven.minecraftforge.net/net/minecraftforge/forge/"
             f"{version}-{modloaderver}/forge-{version}-{modloaderver}-installer.jar"
         )
+
+        url_fallback = (
+            f"https://maven.minecraftforge.net/net/minecraftforge/forge/"
+            f"{version}-{modloaderver}-{version}/forge-{version}-{modloaderver}-{version}-installer.jar"
+        )
+
         file_name = f"forge-{version}-{modloaderver}-installer.jar"
         path = folder / file_name
-        return install(url, path, file_name)
+        try:
+            return install(url, path, file_name)
+        except Exception:
+            return install(url_fallback, path, file_name)
 
     elif modloader == "fabric":
         if modloaderver == "latest":

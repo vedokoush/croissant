@@ -42,10 +42,27 @@ def interactive_setup():
             "choices": ["Paper", "Purpur", "Spigot"]
         })["loader"]
 
+    mldver_choice = prompt({
+        "type": "list",
+        "name": "mldver_choice",
+        "message": "Select modloader version:",
+        "choices": ["Latest", "Custom"]
+    })["mldver_choice"]
+
+    if mldver_choice == "custom":
+        mldver = prompt({
+            "type": "input",
+            "name": "mldver",
+            "message": f"Enter specific {loader} version (e.g., 47.1.3):"
+        })["mldver"]
+    else:
+        mldver = "latest"
+
     print("\n+) Summary:")
     print(f"  Folder: {folder}")
     print(f"  Minecraft Version: {version}")
     print(f"  Loader: {loader}")
+    print(f"  Modloader Version: {mldver}")
     print()
 
     confirm = prompt({
@@ -59,4 +76,4 @@ def interactive_setup():
         print("Cancelled.")
         return None
 
-    return folder, version, loader.lower()
+    return folder, version, loader.lower(), mldver
